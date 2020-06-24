@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "coderunneraksdemo.fullname" . }}
+  labels:
+    app: {{ template "coderunneraksdemo.name" . }}
+    chart: {{ template "coderunneraksdemo.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app: {{ template "coderunneraksdemo.name" . }}
+    release: {{ .Release.Name }}
